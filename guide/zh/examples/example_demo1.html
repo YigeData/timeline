@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>历史上的今天</title>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="../../../../lib/ht.js"></script>
+    <script src="../../../../lib/ht-ui.js"></script>
+    <script src="../../../../lib/ht-ui-timeline.js"></script>
+    <script>
+        function init() {
+            splitLayout = new ht.ui.SplitLayout();
+            splitLayout.setOrientation('v');
+            splitLayout.setPositionType('absoluteFirst');
+            splitLayout.setPosition(40);
+            splitLayout.setSplitterVisible(false);
+            splitLayout.setResizable(false);
+            splitLayout.setToggleVisible(false);
+
+            label = new ht.ui.Label();
+            label.setPadding(5);
+            label.setText('历史上的今天');
+            label.setTextFont('30px SimSun');
+            splitLayout.addView(label, {
+                region: 'first',
+                width: 'wrap_content',
+                height: 'match_parent',
+                align: 'center'
+            });
+            splitLayout.setBorder(new ht.ui.border.LineBorder(1, ht.ui.uiTheme.baseColor));
+
+            timeline = new ht.ui.TimeLine();
+            timeline.setPadding(20);
+            timeline.setLabelFont('14px Arial');
+            timeline.setLabelBackground(new ht.ui.drawable.ColorDrawable('#FF7C7C', 5));
+            timeline.setHeaderFont('12px SimSun');
+            timeline.setHeaderColor('#000');
+            timeline.setEventBackground(new ht.ui.drawable.ColorDrawable('rgb(255,235,195)', 5));
+
+            timeline.addTimeLabel('2010年3月27号');
+            timeline.addTimeEvents([
+                {
+                    header: '吉利收购沃尔玛'
+                },
+                {   
+                    header: '全球开展地球一小时活动'
+                }
+            ]);
+            timeline.addTimeLabel('2013年3月27号');
+            timeline.addTimeEvents([
+                {
+                    header: '著名微电子及冶金专家徐元森逝世'
+                },
+                {   
+                    header: '台湾投县仁爱乡发生6.1级地震'
+                }
+            ]);
+            timeline.addTimeLabel('2014年3月27号');
+            timeline.addTimeEvents([
+                {
+                    header: '新浪微博更名“微博”印证一家独大，为上市做准备'
+                },
+                {
+                    header: '广东开放二胎政策出台'
+                }
+            ]);
+            timeline.addTimeLabel('2016年3月27号');
+            timeline.addTimeEvent({
+                header: '巴基斯坦一公园内发生自杀式炸弹袭击，造成72人死亡'
+            });
+            timeline.addTimeLabel('2018年3月27号');
+            timeline.addTimeEvent({
+                header: '台湾高雄发生枪战，警方击毙一名匪徒搜出大量武器'
+            });
+            splitLayout.addView(timeline, {
+                region: 'second'
+            });
+
+            var preferredSize = splitLayout.getPreferredSize();
+            splitLayout.addToDOM(window, {
+                x: 10,
+                y: 10,
+                width: preferredSize.width,
+                height: 400
+            });
+        }
+    </script>
+</head>
+
+<body onload="init();">
+
+</body>
+
+</html>

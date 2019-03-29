@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TimeLine</title>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="../../../../lib/ht.js"></script>
+    <script src="../../../../lib/ht-ui.js"></script>
+    <script src="../../../../lib/ht-ui-timeline.js"></script>
+    <script>
+        ht.Default.setImage('star', {
+            width: 100,
+            height: 100,
+            comps: [
+                {
+                    type: 'star',
+                    rect: [0, 0, 100, 100],
+                    background: '#FEB64D'
+                }
+            ]
+        });
+        function init() {
+            timeline = new ht.ui.TimeLine();
+            timeline.setBorder(new ht.ui.border.LineBorder(1, ht.ui.uiTheme.baseColor));
+
+            timeline.addTimeLabel('时间点默认样式');
+            timeline.addTimeEvents([
+                {
+                    header: '事件默认样式'
+                },
+                {
+                    iconBackground: '#409EFF',
+                    header: '自定义背景色'
+                },
+                {
+                    icon: 'star',
+                    iconBackground: '#409EFF',
+                    header: '支持添加图标'
+                },
+                {
+                    icon: 'star',
+                    iconWidth: 15,
+                    iconHeight:15,
+                    iconBackground: '#409EFF',
+                    header: '支持修改图标大小'
+                },
+                {
+                    icon: 'star',
+                    iconBackground: '#409EFF',
+                    background: '#409EFF',
+                    header: '支持修改内容样式',
+                    headerFont: '15px KaiTi',
+                    headerColor: 'rgb(255, 255, 255)'
+                }
+            ]);
+            timeline.addTimeLabel('时间点修改样式', '16px SimHei', 'black', 'rgb(242,83,75)');
+
+            var preferredSize = timeline.getPreferredSize();
+            timeline.addToDOM(window, {
+                x: 10,
+                y: 10,
+                width: preferredSize.width,
+                height: preferredSize.height
+            });
+        }
+    </script>
+</head>
+
+<body onload="init();">
+
+</body>
+
+</html>
