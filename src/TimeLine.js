@@ -152,7 +152,8 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
                 var func = function() {
                     var x = (lineAreaWidth - _iconWidth) / 2, y = sy, width = _iconWidth, height = _iconHeight;
                     if (_center) {
-                        y = sy + (preferredSize.height - _iconHeight) / 2;
+                        var max = Math.max(_iconHeight, marginTop + preferredSize.height + marginBottom);
+                        y = sy + (max - _iconHeight) / 2;
                     }
                     ht.Default.drawImage(
                         g,
@@ -191,7 +192,14 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
                 }
             }
             funcArr.push(function() {
-                self.layoutChild(child, (isEvent ? lineAreaWidth + iconContentGap : 0) + marginLeft, sy + marginTop, preferredSize.width, preferredSize.height);
+                var top = sy + marginTop;
+                if (isEvent && _center) {
+                    var height = marginTop + preferredSize.height + marginBottom;
+                    var max = Math.max(_iconHeight, height);
+
+                    top = sy + (max - height) / 2;
+                }
+                self.layoutChild(child, (isEvent ? lineAreaWidth + iconContentGap : 0) + marginLeft, top, preferredSize.width, preferredSize.height);
             });
             layoutY = sy;
             if (isEvent) {
