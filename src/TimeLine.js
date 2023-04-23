@@ -17,10 +17,10 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
 
     __lineColor: 'rgb(228, 231, 237)', // 默认时间轴线颜色
     __lineWidth: 1, // 默认时间轴线宽度
-    __labelFont: '16px Arial', // 默认时间点字体
-    __labelColor: 'rgb(255, 255, 255)', // 默认时间点颜色
-    __labelBackground: ['ht.ui.drawable.ColorDrawable', '#FEB64D', 5], // 默认时间点背景
-    __iconBackground: '#eeeeee', // 默认事件图标背景色
+    __labelFont: '14px arial,sans-serif', // 默认时间点字体
+    __labelColor: '#909399', // 默认时间点颜色
+    __labelBackground: ['ht.ui.drawable.ColorDrawable', '#F5F7FA', 5], // 默认时间点背景
+    __iconBackground: '#c7c8cb', // 默认事件图标背景色
     __headerFont: '12px arial,sans-serif', // 默认事件头字体
     __headerColor: '#909399', // 默认事件头颜色
     __contentFont: '14px arial,sans-serif', // 默认事件内容字体
@@ -59,16 +59,17 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
                 marginTop = layoutParams.marginTop || 0,
                 marginBottom = layoutParams.marginBottom || 0,
                 type = child.a('$type'),
+                isEvent = type === 'event',
                 iconHeight,
                 addHeight = childPreferredSize.height + marginTop + marginBottom;
 
-            if (type === 'event') {
+            if (isEvent) {
                 var info = child.a('$info');
 
                 iconHeight = info.iconHeight || self.getIconHeight();
             }
 
-            width = Math.max(width, marginLeft + marginRight + childPreferredSize.width + lineAreaWidth + iconContentGap);
+            width = Math.max(width, marginLeft + marginRight + childPreferredSize.width + (isEvent ? lineAreaWidth + iconContentGap : 0));
             size.height += iconHeight ? Math.max(iconHeight, addHeight) : addHeight;
             if (index) size.height += gap;
         });
@@ -190,7 +191,7 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
                 }
             }
             funcArr.push(function() {
-                self.layoutChild(child, (isEvent ? lineAreaWidth : 0) + marginLeft + iconContentGap, sy + marginTop, preferredSize.width, preferredSize.height);
+                self.layoutChild(child, (isEvent ? lineAreaWidth + iconContentGap : 0) + marginLeft, sy + marginTop, preferredSize.width, preferredSize.height);
             });
             layoutY = sy;
             if (isEvent) {
