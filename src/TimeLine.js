@@ -93,6 +93,24 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
         // 返回 map
         return preferredSizeProperties;
     },
+
+    /**
+     * @override
+     */
+    onPropertyChanged: function(e) {
+        ht.ui.TimeLine.superClass.onPropertyChanged.call(this, e);
+
+        if (e.property === 'placement') {
+            this.getChildren().each(function(child) {
+                var type = child.a('$type');
+
+                if (type === 'event') {
+                    child.getChildren().sort(child._sortFunc);
+                    child.iv();
+                }
+            });
+        }
+    },
     
     /**
      * 绘制时间轴线和图标
@@ -311,8 +329,8 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
             iconLabel = new ht.ui.Label(),
             vbox = new ht.ui.VBoxLayout();
         
-        hbox.a('$type', 'event');
-        hbox.a('$info', event);
+        vbox.a('$type', 'event');
+        vbox.a('$info', event);
         vbox.setGap(5);
 
         // 绘制时间轴上的图标
@@ -352,14 +370,13 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
                                             '">' + header + 
                                             '</div>');
             headerView = htmlView;
-            vbox.addView(headerView, {
-                width: 'match_parent',
-                height: 'wrap_content'
-            });
         }
-        else if (header) {
+        else if (header instanceof ht.ui.View) {
             headerView = header;
-            
+        }
+
+        if (headerView) {
+            headerView.a('$type', 'header');
             vbox.addView(headerView, {
                 width: 'match_parent',
                 height: 'wrap_content'
@@ -375,29 +392,39 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
                                             '">' + content + 
                                             '</div>');
             contentView = htmlView;
-            
-            vbox.addView(contentView, {
-                width: 'match_parent',
-                height: 'wrap_content'
-            }, placement === 'bottom' ? 0 : undefined);
         }
-        else if (content) {
+        else if (content instanceof ht.ui.View) {
             contentView = content;
-            
+        }
+
+        if (contentView) {
+            contentView.a('$type', 'content');
             vbox.addView(contentView, {
                 width: 'match_parent',
                 height: 'wrap_content'
-            }, placement === 'bottom' ? 0 : undefined);
+            });
         }
 
         vbox.setBorder(border);
         vbox.setBackground(background);
-        hbox.addView(vbox, {
-            width: 'match_parent',
-            height: 'wrap_content'
-        });
+        var sortFunc = function(a,b) {
+            var aType = a.a('$type');
+            var placement = event.placement || self.getPlacement();console.log(aType, placement)
+            var flag = -1;
 
-        self.addView(hbox, {
+            if (aType === 'header') flag = placement === 'top' ? -1 : 1;
+            else flag = placement === 'top' ? 1 : -1;
+
+            return flag;
+        };
+        vbox.getChildren().sort(sortFunc);
+        vbox._sortFunc = sortFunc;
+        // hbox.addView(vbox, {
+        //     width: 'match_parent',
+        //     height: 'wrap_content'
+        // });
+
+        self.addView(vbox, {
             width: 'wrap_content',
             height: 'wrap_content'
         }, index);
