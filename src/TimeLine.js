@@ -120,7 +120,7 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
      * @param height
      * @override
      */
-    validateImpl: function (x, y, width, height) {console.log('validate!');
+    validateImpl: function (x, y, width, height) {
         var self = this;
         ht.ui.TimeLine.superClass.validateImpl.call(self, x, y, width, height);
 
@@ -409,7 +409,7 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
         vbox.setBackground(background);
         var sortFunc = function(a,b) {
             var aType = a.a('$type');
-            var placement = event.placement || self.getPlacement();console.log(aType, placement)
+            var placement = event.placement || self.getPlacement();
             var flag = -1;
 
             if (aType === 'header') flag = placement === 'top' ? -1 : 1;
@@ -467,8 +467,13 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
             contentColor: true, 
             eventBorder: true,
             eventBackground: true,
+            icon: true,
             iconWidth: true,
-            iconHeight: true
+            iconHeight: true,
+            gap: true,
+            iconContentGap: true,
+            placement: true,
+            'is:center': true
         });
     }   
 });
