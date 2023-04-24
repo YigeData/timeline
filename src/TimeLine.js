@@ -504,3 +504,5 @@ def('ht.ui.Timeline', ht.ui.ViewGroup, {
         });
     }   
 });
+
+ui.TimeLine = ui.Timeline;
