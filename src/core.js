@@ -15,7 +15,7 @@ Default.setImage('ht_ui_timeline_icon', {
           "value": "rgb(228,231,237)"
         },
         "borderColor": "#979797",
-        "opacity": 0.3,
+        "opacity": 0.2,
         "rect": [
           1,
           1,
