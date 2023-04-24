@@ -3,3 +3,4 @@ lib
 jsdoc
 release
 node_modules
+.DS_Store

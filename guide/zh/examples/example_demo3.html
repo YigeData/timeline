@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Timeline</title>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="../../../../lib/ht.js"></script>
+    <script src="../../../../lib/ht-ui.js"></script>
+    <script src="../../../../lib/ht-ui-timeline.js"></script>
+    <script>
+        ht.Default.setImage('star', {
+            width: 100,
+            height: 100,
+            comps: [
+                {
+                    type: 'star',
+                    rect: [0, 0, 100, 100],
+                    background: '#FEB64D'
+                }
+            ]
+        });
+        function init() {
+            vbox = new ht.ui.VBoxLayout();
+            timeline = new ht.ui.Timeline();
+            timeline.setBorder(new ht.ui.border.LineBorder(1, ht.ui.uiTheme.baseColor));
+
+            timeline.addTimeEvents([
+                {
+                    header: '2023-04-21 12:00:00',
+                    content: 'Event Start',
+                    type: 'primary'
+                },
+                {
+                    header: '2023-04-21 12:00:00',
+                    content: 'Event Start',
+                    type: 'success'
+                },
+                {
+                    header: '2023-04-21 12:00:00',
+                    content: 'Event Start',
+                    type: 'warning'
+                },
+                {
+                    header: '2023-04-21 12:00:00',
+                    content: 'Event Start',
+                    type: 'danger'
+                },
+                {
+                    header: '2023-04-21 12:00:00',
+                    content: 'Event Start',
+                    type: 'info'
+                },
+                {
+                    header: '2023-04-21 12:00:00',
+                    content: 'Event Start'
+                }
+            ]);
+
+            vbox.addView(timeline);
+            vbox.addToDOM();
+        }
+    </script>
+</head>
+
+<body onload="init();">
+
+</body>
+
+</html>
