@@ -1,18 +1,18 @@
 /**
  * 时间轴组件
  */
-ui.TimeLine = function () {
-    ht.ui.TimeLine.superClass.constructor.call(this);
+ui.Timeline = function () {
+    ht.ui.Timeline.superClass.constructor.call(this);
 };
 
-def('ht.ui.TimeLine', ht.ui.ViewGroup, {
+def('ht.ui.Timeline', ht.ui.ViewGroup, {
 
     // 样式属性
     ui_ac: [
         'lineColor', 'lineWidth', 'labelFont', 'labelColor', 'labelBackground',
         'iconBackground', 'headerFont', 'headerColor', 'contentFont', 'contentColor', 
         'eventBorder', 'eventBackground', 'icon', 'iconWidth', 'iconHeight', 'gap',
-        'iconContentGap', 'placement', 'is:center'
+        'iconContentGap', 'placement', 'is:center', 'type'
     ],
 
     __lineColor: 'rgb(228, 231, 237)', // 默认时间轴线颜色
@@ -33,6 +33,7 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
     __iconContentGap: 10, // 默认图标和内容间距
     __placement: 'top', // 默认 header 在上方
     __center: false, // 默认 icon 不居中
+    __type: '', // 默认图标类型，优先级高于 iconBackground
 
     /**
      * @override
@@ -82,7 +83,7 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
      * @override
      */
     getPreferredSizeProperties: function() {
-        var preferredSizeProperties = ht.ui.TimeLine.superClass.getPreferredSizeProperties.call(this);
+        var preferredSizeProperties = ht.ui.Timeline.superClass.getPreferredSizeProperties.call(this);
 
         preferredSizeProperties = ht.Default.clone(preferredSizeProperties);
         preferredSizeProperties.iconWidth = true;
@@ -98,7 +99,7 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
      * @override
      */
     onPropertyChanged: function(e) {
-        ht.ui.TimeLine.superClass.onPropertyChanged.call(this, e);
+        ht.ui.Timeline.superClass.onPropertyChanged.call(this, e);
 
         if (e.property === 'placement') {
             this.getChildren().each(function(child) {
@@ -111,6 +112,25 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
             });
         }
     },
+
+    getCurrentIconBackground: function(type, iconBackground) {
+        var colorMap = {
+            'primary': '#5BB5F9',
+            'success': '#3DCEC4',
+            'warning': '#FFAD2B',
+            'danger': '#F56C6C',
+            'info': '#909399'
+        };
+        var color;
+
+        if (!type) type = this.getType();
+        if (!iconBackground) iconBackground = this.getIconBackground();
+
+        color = colorMap[type];
+        if (!color) color = iconBackground;
+
+        return color;
+    },
     
     /**
      * 绘制时间轴线和图标
@@ -122,7 +142,7 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
      */
     validateImpl: function (x, y, width, height) {
         var self = this;
-        ht.ui.TimeLine.superClass.validateImpl.call(self, x, y, width, height);
+        ht.ui.Timeline.superClass.validateImpl.call(self, x, y, width, height);
 
         var g = self.getRootContext(),
             lineColor = self.getLineColor(),
@@ -158,7 +178,7 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
 
             if (index) sy += gap;
 
-            var _center, _icon, _iconWidth, _iconHeight, _iconBackground;
+            var _center, _icon, _iconWidth, _iconHeight, _iconBackground, _type;
             if (isEvent) {
                 var info = child.a('$info');
                 _center = info.center || center;
@@ -166,6 +186,8 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
                 _iconWidth = info.iconWidth || iconWidth;
                 _iconHeight = info.iconHeight || iconHeight;
                 _iconBackground = info.iconBackground || iconBackground;
+                _type = info.type || self.getType();
+                var currentIconBackground = self.getCurrentIconBackground(_type, _iconBackground);
 
                 var func = function() {
                     var x = (lineAreaWidth - _iconWidth) / 2, y = sy, width = _iconWidth, height = _iconHeight;
@@ -177,7 +199,7 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
                         g,
                         ht.Default.getImage(_icon),
                         x,y,width,height,
-                        null, null, _iconBackground
+                        null, null, currentIconBackground
                     );
                 };
                 funcArr.push(func);
@@ -452,7 +474,7 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
      * @override
      */
     getSerializableProperties: function() {
-        var parentProperties = ht.ui.TimeLine.superClass.getSerializableProperties.call(this);
+        var parentProperties = ht.ui.Timeline.superClass.getSerializableProperties.call(this);
         
         return ht.Default.addMethod(parentProperties, {
             lineWidth: true,
@@ -473,7 +495,8 @@ def('ht.ui.TimeLine', ht.ui.ViewGroup, {
             gap: true,
             iconContentGap: true,
             placement: true,
-            'is:center': true
+            'is:center': true,
+            type: true
         });
     }   
 });
