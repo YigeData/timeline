@@ -153,7 +153,8 @@ def('ht.ui.Timeline', ht.ui.ViewGroup, {
             iconHeight = self.getIconHeight(),
             iconBackground = self.getIconBackground(),
             lineAreaWidth = self._getLineAreaWidth(),
-            layoutY = self.ty() || 0,
+            layoutY = 0,
+            ty = self.ty(),
             scrollWidth = 0,
             scrollHeight = 0,
             gap = self.getGap(),
@@ -161,7 +162,10 @@ def('ht.ui.Timeline', ht.ui.ViewGroup, {
             center = self.isCenter();
 
         g.save();
-        g.translate(x, y);
+        g.translate(x, y + ty);
+        g.beginPath();
+        g.rect(0, -ty, width, height);
+        g.clip();
 
         var funcArr = [];
         g.beginPath();
