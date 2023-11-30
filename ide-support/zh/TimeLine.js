@@ -2,7 +2,7 @@
  * 时间轴组件<br>
  * 样式属性(不含从父类继承)：lineColor, lineWidth, labelFont, labelColor, labelBackground, iconBackground, headerFont, headerColor, contentFont, contentColor, eventBorder, eventBackground
  * @constructor
- * @extends {ht.ui.VBoxLayoutw}
+ * @extends {ht.ui.VBoxLayout}
  */
 ht.ui.TimeLine = function() {}
 
@@ -157,6 +157,7 @@ ht.ui.TimeLine.prototype.setEventBackground = function(background) {}
  * @param color 文字颜色
  * @param background 背景
  * @param index 插入到时间轴中的位置（位置计算包括所有的时间点和事件）
+ * @return {ht.ui.View} 时间点组件
  * @example
  * // 设置单独的时间点样式
  * timeline.addTimeLabel('时间点内容', '16px SimHei', 'black', 'rgb(242,83,75)', 10);
@@ -181,6 +182,7 @@ ht.ui.TimeLine.prototype.addTimeLabel = function(time, font, color, background, 
  *      background // 事件背景
  * }
  * @param index 插入到时间轴中的位置（位置计算包括所有的时间点和事件）
+ * @return {ht.ui.View} 时间事件组件
  * @example
  * // 设置单独的事件样式
  * timeline.addTimeEvent(
@@ -212,3 +214,20 @@ ht.ui.TimeLine.prototype.addTimeEvent = function(event, index) {}
   * ], 10);
   */
  ht.ui.TimeLine.prototype.addTimeEvents = function(events, index) {}
+
+ /**
+ * 删除所有时间点或事件组件
+ */
+ht.ui.TimeLine.prototype.clear = function (){};
+
+/**
+ * 将时间点或事件组件从时间轴中删除
+ * @param {ht.ui.View} view 要删除的时间点或事件
+ */
+ht.ui.TimeLine.prototype.removeView = function (view){};
+
+/**
+ * 删除时间点或事件组件列表中对应下标为 index 的时间点或事件组件
+ * @param {Number} index 时间点或事件组件下标
+ */
+ht.ui.TimeLine.prototype.removeViewAt = function (index){};

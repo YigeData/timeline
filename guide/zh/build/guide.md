@@ -19,7 +19,7 @@
 
 示范例子：
 
-!(#example_demo@460)
+!(#example_demo@500)
 
     timeline.addTimeEvents([
         {
@@ -63,7 +63,7 @@
 
 组件也可通过传入参数单独设置每个时间点和事件样式。
 
-!(#example_demo2@400)
+!(#example_demo2@460)
 
     timeline.addTimeEvent({
         iconBackground: 'rgb(157,224,235)',
@@ -76,3 +76,7 @@
         contentFont: '15px KaiTi',
         contentColor: 'black'
     });
+
+清空所有时间点和事件代码如下：
+
+    timeline.clear();
