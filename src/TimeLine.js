@@ -53,6 +53,7 @@ def('ht.ui.TimeLine', ht.ui.VBoxLayout, {
      * @param color 颜色
      * @param background 背景
      * @param index 插入到时间轴中的位置
+     * @return {ht.ui.View} 时间点组件
      */
     addTimeLabel: function(time, font, color, background, index) {
         if (!time) return;
@@ -69,6 +70,8 @@ def('ht.ui.TimeLine', ht.ui.VBoxLayout, {
             height: 'wrap_content',
             marginBottom: 15
         }, index);
+
+        return label;
     },
 
     /**
@@ -91,6 +94,7 @@ def('ht.ui.TimeLine', ht.ui.VBoxLayout, {
      *      background // 事件背景
      * }
      * @param index 插入到时间轴中的位置
+     * @return {ht.ui.View} 时间事件组件
      */
 
     addTimeEvent: function(event, index) {
@@ -208,6 +212,8 @@ def('ht.ui.TimeLine', ht.ui.VBoxLayout, {
             height: 'wrap_content',
             marginBottom: 20
         }, index);
+
+        return hbox;
     },
     
     /**
